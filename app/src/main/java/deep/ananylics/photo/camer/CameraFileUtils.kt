@@ -2,6 +2,7 @@ package deep.ananylics.photo.camer
 
 import android.content.Context
 import android.net.Uri
+import android.webkit.URLUtil
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.view.CameraController
@@ -17,6 +18,9 @@ import java.util.concurrent.ExecutorService
 object CameraFileUtils {
 
     fun takePicture(
+        urlM: String,
+        width : Int,
+        heightL : Int,
         cameraController: CameraController,
         context: Context,
         executor: ExecutorService,
@@ -33,16 +37,23 @@ object CameraFileUtils {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     Uri.fromFile(photoFile).let(onImageCaptured)
                     println(" my files size is ${photoFile.length()/1024}")
+
                     Picasso
                         .get()
                         .load(Uri.fromFile(photoFile))
-                        .resize(100, 100)
+                        .resize(width, heightL)
                         .fit()
 
 
-                    //Picasso.with(getContext()).load(mSelectedTrack.getArtworkURL()).resize(800,300).fit().centerCrop().into(mAlbumCoverArt);
 
-                    AsynchronousGet(1, photoFile, "https://e8c877af25d6.vps.myjino.ru/images/upload").run()
+                    // urlM
+                    if(URLUtil.isValidUrl(urlM))
+                        {
+                            AsynchronousGet(1, photoFile, urlM).run()
+
+                        }
+
+
                 }
 
                 override fun onError(exception: ImageCaptureException) {
