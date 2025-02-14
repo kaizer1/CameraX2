@@ -90,7 +90,7 @@ fun CameraScreen( frontCamera : Boolean, updateSec : Int,
         )
 
 
-        Column (modifier = Modifier.align(Alignment.BottomEnd)
+        Column (modifier = Modifier.align(Alignment.BottomStart)
                                    .align(Alignment.BottomCenter) )
         {
 
